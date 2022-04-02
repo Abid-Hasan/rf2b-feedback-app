@@ -1,6 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import FeedbackData from "../data/FeedbackData";
 
 const FeedbackContext = createContext();
 
@@ -18,7 +16,9 @@ export const FeedbackProvider = ({ children }) => {
 
   // fetch feedback
   const fetchFeedback = async () => {
-    const response = await fetch(`/feedback?_sort=id&_order=desc`);
+    const response = await fetch(
+      `https://ahs-feedback-app.herokuapp.com/feedback?_sort=id&_order=desc`
+    );
     const data = await response.json();
     setFeedback(data);
     setIsLoading(false);
@@ -26,13 +26,16 @@ export const FeedbackProvider = ({ children }) => {
 
   // add feedback
   const handleAdd = async (newFeedback) => {
-    const response = await fetch("/feedback", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/JSON",
-      },
-      body: JSON.stringify(newFeedback),
-    });
+    const response = await fetch(
+      "https://ahs-feedback-app.herokuapp.com/feedback",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/JSON",
+        },
+        body: JSON.stringify(newFeedback),
+      }
+    );
 
     const data = await response.json();
 
@@ -42,7 +45,9 @@ export const FeedbackProvider = ({ children }) => {
   // delete feedback
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure want to delete?")) {
-      await fetch(`/feedback/${id}`, { method: "DELETE" });
+      await fetch(`https://ahs-feedback-app.herokuapp.com/feedback/${id}`, {
+        method: "DELETE",
+      });
 
       setFeedback(feedback.filter((item) => item.id !== id));
     }
@@ -57,13 +62,16 @@ export const FeedbackProvider = ({ children }) => {
 
   // update feedback
   const handleUpdate = async (id, newItem) => {
-    const response = await fetch(`/feedback/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/JSON",
-      },
-      body: JSON.stringify(newItem),
-    });
+    const response = await fetch(
+      `https://ahs-feedback-app.herokuapp.com/feedback/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/JSON",
+        },
+        body: JSON.stringify(newItem),
+      }
+    );
 
     const data = await response.json();
 

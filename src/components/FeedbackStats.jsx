@@ -12,7 +12,7 @@ const FeedbackStats = () => {
 
   return (
     <div className="feedback-stats">
-      <h4>{feedback.length} Reviews</h4>
+      <h4>{feedback.length} Review(s)</h4>
       <h4>
         Average Rating: {average ? average.toFixed(1).replace(/[.,]0$/, "") : 0}
       </h4>
